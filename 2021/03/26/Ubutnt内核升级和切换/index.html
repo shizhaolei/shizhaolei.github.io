@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="1.查看内核列表 12345sudo dpkg --get-selections |grep linux-imagelinux-image-4.4.0-194-generic			installlinux-image-4.4.0-204-generic			installlinux-image-4.4.0-206-generic			installlinux-image-virtual				in">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubutnt内核升级和切换">
+<meta property="og:url" content="http://example.com/2021/03/26/Ubutnt%E5%86%85%E6%A0%B8%E5%8D%87%E7%BA%A7%E5%92%8C%E5%88%87%E6%8D%A2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1.查看内核列表 12345sudo dpkg --get-selections |grep linux-imagelinux-image-4.4.0-194-generic			installlinux-image-4.4.0-204-generic			installlinux-image-4.4.0-206-generic			installlinux-image-virtual				in">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-03-26T05:45:41.000Z">
+<meta property="article:modified_time" content="2021-03-26T05:51:58.482Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="ubuntu">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/03/26/Ubutnt%E5%86%85%E6%A0%B8%E5%8D%87%E7%BA%A7%E5%92%8C%E5%88%87%E6%8D%A2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Ubutnt内核升级和切换 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/26/Ubutnt%E5%86%85%E6%A0%B8%E5%8D%87%E7%BA%A7%E5%92%8C%E5%88%87%E6%8D%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Ubutnt内核升级和切换
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-03-26 13:45:41 / Modified: 13:51:58" itemprop="dateCreated datePublished" datetime="2021-03-26T13:45:41+08:00">2021-03-26</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>1.查看内核列表</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg --get-selections |grep linux-image</span><br><span class="line">linux-image-4.4.0-194-generic			install</span><br><span class="line">linux-image-4.4.0-204-generic			install</span><br><span class="line">linux-image-4.4.0-206-generic			install</span><br><span class="line">linux-image-virtual				install</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<p>查看当前使用内核</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname -r </span><br></pre></td></tr></table></figure>
+
+<p>2.内核列表里没有则下载目标版本的内核文件</p>
+<p>Ubuntu内核网站：<a target="_blank" rel="noopener" href="http://kernel.ubuntu.com/~kernel-ppa/mainline/">http://kernel.ubuntu.com/~kernel-ppa/mainline/</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14.12/linux-headers-4.14.12-041412_4.14.12-041412.201801051649_all.deb</span><br><span class="line"></span><br><span class="line">wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14.12/linux-headers-4.14.12-041412-generic_4.14.12-041412.201801051649_amd64.deb</span><br><span class="line"></span><br><span class="line">wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14.12/linux-image-4.14.12-041412-generic_4.14.12-041412.201801051649_amd64.deb</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>2.2安装内核文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dpkg -i *.deb</span><br></pre></td></tr></table></figure>
+
+<p>升级安装内核，升级后就会显示在内核列表中</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install linux-image-4.4.0-206-generic</span><br></pre></td></tr></table></figure>
+
+<p>切换内核<br>查询已安装的内核和内核序号</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">grep menuentry /boot/grub/grub.cfg</span><br><span class="line">if [ x&quot;$&#123;feature_menuentry_id&#125;&quot; = xy ]; then</span><br><span class="line">  menuentry_id_option=&quot;--id&quot;</span><br><span class="line">  menuentry_id_option=&quot;&quot;</span><br><span class="line">export menuentry_id_option</span><br><span class="line"><span class="meta">#</span><span class="bash">0（序号0）</span></span><br><span class="line">menuentry &#x27;Ubuntu&#x27; --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option &#x27;gnulinux-simple-9c27d942-d674-4b57-9948-ae9abd0c1848&#x27; &#123;</span><br><span class="line"><span class="meta">#</span><span class="bash">1（序号1）</span></span><br><span class="line">submenu &#x27;Advanced options for Ubuntu&#x27; $menuentry_id_option &#x27;gnulinux-advanced-9c27d942-d674-4b57-9948-ae9abd0c1848&#x27; &#123;</span><br><span class="line"><span class="meta">	#</span><span class="bash">0（子序号0）</span></span><br><span class="line">	menuentry &#x27;Ubuntu, with Linux 4.4.0-206-generic&#x27; --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option &#x27;gnulinux-4.4.0-206-generic-advanced-9c27d942-d674-4b57-9948-ae9abd0c1848&#x27; &#123;</span><br><span class="line"><span class="meta">	#</span><span class="bash">1</span></span><br><span class="line">	menuentry &#x27;Ubuntu, with Linux 4.4.0-206-generic (recovery mode)&#x27; --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option &#x27;gnulinux-4.4.0-206-generic-recovery-9c27d942-d674-4b57-9948-ae9abd0c1848&#x27; &#123;</span><br><span class="line"><span class="meta">	#</span><span class="bash">2</span></span><br><span class="line">	menuentry &#x27;Ubuntu, with Linux 4.4.0-204-generic&#x27; --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option &#x27;gnulinux-4.4.0-204-generic-advanced-9c27d942-d674-4b57-9948-ae9abd0c1848&#x27; &#123;</span><br><span class="line"><span class="meta">	#</span><span class="bash">3</span></span><br><span class="line">	menuentry &#x27;Ubuntu, with Linux 4.4.0-204-generic (recovery mode)&#x27; --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option &#x27;gnulinux-4.4.0-204-generic-recovery-9c27d942-d674-4b57-9948-ae9abd0c1848&#x27; &#123;</span><br><span class="line"><span class="meta">	#</span><span class="bash">4</span></span><br><span class="line">	menuentry &#x27;Ubuntu, with Linux 4.4.0-194-generic&#x27; --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option &#x27;gnulinux-4.4.0-194-generic-advanced-9c27d942-d674-4b57-9948-ae9abd0c1848&#x27; &#123;</span><br><span class="line"><span class="meta">	#</span><span class="bash">5</span></span><br><span class="line">	menuentry &#x27;Ubuntu, with Linux 4.4.0-194-generic (recovery mode)&#x27; --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option &#x27;gnulinux-4.4.0-194-generic-recovery-9c27d942-d674-4b57-9948-ae9abd0c1848&#x27; &#123;</span><br></pre></td></tr></table></figure>
+
+<p>修改grub文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/default/grub</span><br><span class="line">GRUB_DEFAULT=&quot;1 &gt;3&quot;  </span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="string">&quot;1 &gt;3&quot;</span>这个表示启动序号1中，子序号为3的启动项，即<span class="string">&#x27;Ubuntu, with Linux 4.4.0-204-generic&#x27;</span></span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>更新grub文件，并重启</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">update-grub</span><br><span class="line"></span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
+
+<p>删除空闲的旧版本内核</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get remove linux-image-4.4.0-194-generic</span><br></pre></td></tr></table></figure>
+
+
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ubuntu/" rel="tag"># ubuntu</a>
+          </div>
+
+        
+
+
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
